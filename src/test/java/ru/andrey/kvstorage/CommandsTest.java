@@ -81,7 +81,7 @@ public class CommandsTest {
     @Test
     public void test_readKey_exception() throws DatabaseException {
         when(env.getDatabase(DB_NAME)).thenReturn(Optional.of(database));
-        var message = "Table already exists";
+        var message = "Some error in database";
         doThrow(new DatabaseException(message)).when(database).read(TABLE_NAME, KEY_NAME);
 
         Command command = Command.builder()
@@ -93,7 +93,7 @@ public class CommandsTest {
 
         DatabaseCommandResult result = server.executeNextCommand(command.toString());
         assertEquals(FAILED, result.getStatus());
-        assertEquals(message, result.getErrorMessage());
+        assertEquals(message, result.getErrorMessage().get());
     }
 
     // ================= update key tests =================
@@ -116,7 +116,7 @@ public class CommandsTest {
     @Test
     public void test_updateKey_exception() throws DatabaseException {
         when(env.getDatabase(DB_NAME)).thenReturn(Optional.of(database));
-        var message = "Table already exists";
+        var message = "Some error in database";
         doThrow(new DatabaseException(message)).when(database).write(TABLE_NAME, KEY_NAME, VALUE);
 
         Command command = Command.builder()
@@ -129,7 +129,7 @@ public class CommandsTest {
 
         DatabaseCommandResult result = server.executeNextCommand(command.toString());
         assertEquals(FAILED, result.getStatus());
-        assertEquals(message, result.getErrorMessage());
+        assertEquals(message, result.getErrorMessage().get());
     }
 
     @Test
@@ -183,7 +183,7 @@ public class CommandsTest {
 
     @Test
     public void test_createTable_exception() throws DatabaseException {
-        var message = "Table already exists";
+        var message = "Some error in database";
         when(env.getDatabase(DB_NAME)).thenReturn(Optional.of(database));
         doThrow(new DatabaseException(message)).when(database).createTableIfNotExists(TABLE_NAME);
 
@@ -195,7 +195,7 @@ public class CommandsTest {
 
         DatabaseCommandResult result = server.executeNextCommand(command.toString());
         assertEquals(FAILED, result.getStatus());
-        assertEquals(message, result.getErrorMessage());
+        assertEquals(message, result.getErrorMessage().get());
     }
 
     @Test
