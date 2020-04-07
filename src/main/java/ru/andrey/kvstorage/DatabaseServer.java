@@ -8,6 +8,8 @@ import java.util.Arrays;
 
 public class DatabaseServer {
 
+    private static final int COMMAND_TYPE = 0;
+
     private final ExecutionEnvironment env;
 
     public DatabaseServer(ExecutionEnvironment env) {
@@ -26,12 +28,15 @@ public class DatabaseServer {
         String[] args = commandText.split(" ");
 
         try {
-            return DatabaseCommands.valueOf(args[0])
+            return DatabaseCommands.valueOf(args[COMMAND_TYPE])
                     .getCommand(env, Arrays.copyOfRange(args, 1, args.length))
                     .execute();
         }
         catch (IllegalArgumentException e) {
             return DatabaseCommandResult.error("No such command");
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
+            return DatabaseCommandResult.error("Invalid command arguments");
         }
     }
 }
