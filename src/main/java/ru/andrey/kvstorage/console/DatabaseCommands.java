@@ -5,7 +5,7 @@ import ru.andrey.kvstorage.commands.CreateTable;
 import ru.andrey.kvstorage.commands.ReadKey;
 import ru.andrey.kvstorage.commands.UpdateKey;
 
-public enum DataBaseCommands {
+public enum DatabaseCommands {
     CREATE_DATABASE {
         @Override
         public DatabaseCommand getCommand(ExecutionEnvironment env, String... args) {

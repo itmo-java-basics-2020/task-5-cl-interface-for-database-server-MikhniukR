@@ -32,7 +32,7 @@ public class ReadKey implements DatabaseCommand {
         try {
             return DatabaseCommandResult.success(databaseOptional.get().read(tableName, key));
         } catch (DatabaseException e) {
-            return DatabaseCommandResult.error("Some error in database");
+            return DatabaseCommandResult.error(e.getMessage());
         }
     }
 }

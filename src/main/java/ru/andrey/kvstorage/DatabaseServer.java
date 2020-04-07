@@ -1,6 +1,6 @@
 package ru.andrey.kvstorage;
 
-import ru.andrey.kvstorage.console.DataBaseCommands;
+import ru.andrey.kvstorage.console.DatabaseCommands;
 import ru.andrey.kvstorage.console.DatabaseCommandResult;
 import ru.andrey.kvstorage.console.ExecutionEnvironment;
 
@@ -26,7 +26,7 @@ public class DatabaseServer {
         String[] args = commandText.split(" ");
 
         try {
-            return DataBaseCommands.valueOf(args[0])
+            return DatabaseCommands.valueOf(args[0])
                     .getCommand(env, Arrays.copyOfRange(args, 1, args.length))
                     .execute();
         }
