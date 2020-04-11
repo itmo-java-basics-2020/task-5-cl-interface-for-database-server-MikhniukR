@@ -17,28 +17,30 @@ public interface DatabaseCommandResult {
     }
 
     static DatabaseCommandResult success(String result) {
-        return new DatabaseCommandResultImpl(DatabaseCommandStatus.SUCCESS, result);
+        return new DatabaseCommandResultImpl(DatabaseCommandStatus.SUCCESS, result, null);
     }
 
-    static DatabaseCommandResult error(String message) {
-        return new DatabaseCommandResultImpl(DatabaseCommandStatus.FAILED, message);
+    static DatabaseCommandResult error(String errorMessage) {
+        return new DatabaseCommandResultImpl(DatabaseCommandStatus.FAILED, null, errorMessage);
     }
 
 
     class DatabaseCommandResultImpl implements DatabaseCommandResult {
 
         private final DatabaseCommandStatus status;
-        private final String message;
+        private final String result;
+        private final String errorMessage;
 
-        private DatabaseCommandResultImpl(DatabaseCommandStatus status, String message) {
+        private DatabaseCommandResultImpl(DatabaseCommandStatus status, String result, String errorMessage) {
             this.status = status;
-            this.message = message;
+            this.result = result;
+            this.errorMessage = errorMessage;
         }
 
         @Override
         public Optional<String> getResult() {
             if (isSuccess()) {
-                return Optional.of(message);
+                return Optional.of(result);
             }
 
             return Optional.empty();
@@ -57,7 +59,7 @@ public interface DatabaseCommandResult {
         @Override
         public Optional<String> getErrorMessage() {
             if (!isSuccess()) {
-                return Optional.of(message);
+                return Optional.of(errorMessage);
             }
 
             return Optional.empty();

@@ -38,6 +38,6 @@ public class UpdateKey implements DatabaseCommand {
             return DatabaseCommandResult.error(e.getMessage());
         }
 
-        return DatabaseCommandResult.success("In table " + tableName + " " + key + " = " + value);
+        return DatabaseCommandResult.success(value);
     }
 }

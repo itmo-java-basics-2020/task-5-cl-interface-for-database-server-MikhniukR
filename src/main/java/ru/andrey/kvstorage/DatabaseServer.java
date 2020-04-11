@@ -32,11 +32,8 @@ public class DatabaseServer {
                     .getCommand(env, Arrays.copyOfRange(args, 1, args.length))
                     .execute();
         }
-        catch (IllegalArgumentException e) {
-            return DatabaseCommandResult.error("No such command");
-        }
-        catch (ArrayIndexOutOfBoundsException e) {
-            return DatabaseCommandResult.error("Invalid command arguments");
+        catch (Exception e) {
+            return DatabaseCommandResult.error(e.getMessage());
         }
     }
 }

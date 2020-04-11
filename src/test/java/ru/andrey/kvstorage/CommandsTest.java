@@ -81,7 +81,7 @@ public class CommandsTest {
     @Test
     public void test_readKey_exception() throws DatabaseException {
         when(env.getDatabase(DB_NAME)).thenReturn(Optional.of(database));
-        var message = "Some error in database";
+        var message = "Table already exists";
         doThrow(new DatabaseException(message)).when(database).read(TABLE_NAME, KEY_NAME);
 
         Command command = Command.builder()
@@ -116,7 +116,7 @@ public class CommandsTest {
     @Test
     public void test_updateKey_exception() throws DatabaseException {
         when(env.getDatabase(DB_NAME)).thenReturn(Optional.of(database));
-        var message = "Some error in database";
+        var message = "Table already exists";
         doThrow(new DatabaseException(message)).when(database).write(TABLE_NAME, KEY_NAME, VALUE);
 
         Command command = Command.builder()
@@ -183,7 +183,7 @@ public class CommandsTest {
 
     @Test
     public void test_createTable_exception() throws DatabaseException {
-        var message = "Some error in database";
+        var message = "Table already exists";
         when(env.getDatabase(DB_NAME)).thenReturn(Optional.of(database));
         doThrow(new DatabaseException(message)).when(database).createTableIfNotExists(TABLE_NAME);
 
